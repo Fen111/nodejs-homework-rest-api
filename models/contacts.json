@@ -58,5 +58,17 @@
     "name": "Alec Howard",
     "email": "Donec.elementum@scelerisquescelerisquedui.net",
     "phone": "(748) 206-2688"
+  },
+  {
+    "id": "80694162-7523-4dc1-9815-f0f44419993c",
+    "name": "Brad Pitt",
+    "email": "brad.pitt@vestibul.co.uk",
+    "phone": "(453) 914-4453"
+  },
+  {
+    "id": "6d9bc02e-8607-4c58-ad17-aa3d95e51455",
+    "name": "Johnny Depp",
+    "email": "johnny.depp@gmail.com",
+    "phone": "(123) 334-9876"
   }
 ]
