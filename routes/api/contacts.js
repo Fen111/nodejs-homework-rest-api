@@ -20,14 +20,28 @@ router.get("/:contactId", async (req, res, next) => {
 });
 
 router.post("/", validateBody(schemaCreateContact), async (req, res, next) => {
-  const contacts = await contactModel.addContact(req.body);
-  res.status(201).json({ status: "success", code: 201, payload: { contacts } });
+  if (req.body) {
+    const contacts = await contactModel.addContact(req.body);
+    res
+      .status(201)
+      .json({ status: "success", code: 201, payload: { contacts } });
+  }
+  return res.status(400).json({
+    status: "error",
+    code: 400,
+    message: "missing required name field",
+  });
 });
 
 router.delete("/:contactId", async (req, res, next) => {
   const contact = await contactModel.removeContact(req.params.contactId);
   if (contact) {
-    res.json({ status: "success", code: 200, payload: { contact } });
+    res.json({
+      status: "success",
+      code: 200,
+      payload: { contact },
+      message: "contact deleted",
+    });
   }
   return res
     .status(404)
@@ -35,16 +49,23 @@ router.delete("/:contactId", async (req, res, next) => {
 });
 
 router.put("/:contactId", async (req, res, next) => {
-  const contact = await contactModel.updateContact(
-    req.params.contactId,
-    req.body
-  );
-  if (contact) {
-    res.json({ status: "success", code: 200, payload: { contact } });
+  if (req.body) {
+    const contact = await contactModel.updateContact(
+      req.params.contactId,
+      req.body
+    );
+    if (contact) {
+      res.json({ status: "success", code: 200, payload: { contact } });
+    }
+    return res
+      .status(404)
+      .json({ status: "error", code: 404, message: "Not Found" });
   }
-  return res
-    .status(404)
-    .json({ status: "error", code: 404, message: "Not Found" });
+  return res.status(400).json({
+    status: "error",
+    code: 400,
+    message: "missing fields",
+  });
 });
 
 router.patch("/:contactId/phone", async (req, res, next) => {
