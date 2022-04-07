@@ -1,5 +1,12 @@
 const app = require("./app");
+const db = require("./models/db");
 
-app.listen(3000, () => {
-  console.log("Server running. Use our API on port: 3000");
+db.then(() => {
+  app.listen(3000, () => {
+    console.log("Server running. Use our API on port: 3000");
+  });
+  console.log("Database connection successful");
+}).catch((error) => {
+  console.error(`Server not running: ${error.message}`);
+  process.exit(1);
 });

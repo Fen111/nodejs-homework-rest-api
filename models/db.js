@@ -1,22 +1,19 @@
-const fs = require("fs/promises");
-const { join } = require("path");
+const { MongoClient, ServerApiVersion } = require("mongodb");
+require("dotenv").config();
 
-class StorageAdapter {
-  constructor(file) {
-    this.file = file;
-  }
+const uri = process.env.URI_DB;
 
-  async read() {
-    const result = await fs.readFile(join(__dirname, this.file), "utf-8");
-    return JSON.parse(result);
-  }
+const db = MongoClient.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverApi: ServerApiVersion.v1,
+});
 
-  async write(data) {
-    await fs.writeFile(
-      join(__dirname, this.file),
-      JSON.stringify(data, null, 2)
-    );
-  }
-}
+process.on("SIGINT", async () => {
+  const client = await db;
+  client.close();
+  console.log("Disconnected from DB");
+  process.exit(1);
+});
 
-module.exports = StorageAdapter;
+module.exports = db;
