@@ -10,9 +10,9 @@ const db = MongoClient.connect(uri, {
 });
 
 process.on("SIGINT", async () => {
+  console.log("Disconnected from DB");
   const client = await db;
   client.close();
-  console.log("Disconnected from DB");
   process.exit(1);
 });
 

@@ -11,7 +11,6 @@ const getCollection = async (db, nameCollection) => {
 const listContacts = async () => {
   const collection = await getCollection(DB, "contacts");
   const result = await collection.find({}).toArray();
-  console.log(result);
   return result;
 };
 
@@ -19,13 +18,13 @@ const getContactById = async (contactId) => {
   const collection = await getCollection(DB, "contacts");
   const objId = new ObjectId(contactId);
   const [result] = await collection.find({ _id: objId }).toArray();
-  return result;
+  return { ...result, createdAt: objId.getTimestamp() };
 };
 
 const removeContact = async (contactId) => {
   const collection = await getCollection(DB, "contacts");
   const objId = new ObjectId(contactId);
-  const result = await collection.findOneAndDelete({ _id: objId });
+  const { value: result } = await collection.findOneAndDelete({ _id: objId });
   return result;
 };
 
@@ -34,7 +33,6 @@ const addContact = async (body) => {
   const newContact = {
     ...body,
   };
-
   const result = await collection.insertOne(newContact);
   return await getContactById(result.insertedId);
 };
@@ -42,7 +40,7 @@ const addContact = async (body) => {
 const updateContact = async (contactId, body) => {
   const collection = await getCollection(DB, "contacts");
   const objId = new ObjectId(contactId);
-  const result = await collection.findOneAndUpdate(
+  const { value: result } = await collection.findOneAndUpdate(
     { _id: objId },
     { $set: body },
     { returnDocument: "after" }

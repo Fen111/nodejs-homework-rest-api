@@ -1,4 +1,5 @@
 const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
 
 const schemaCreateContact = Joi.object({
   name: Joi.string().min(3).max(30).required().messages({
@@ -10,4 +11,8 @@ const schemaCreateContact = Joi.object({
   phone: Joi.string().required(),
 });
 
-module.exports = { schemaCreateContact };
+const schemaMongoId = Joi.object({
+  contactId: Joi.object().required(),
+});
+
+module.exports = { schemaCreateContact, schemaMongoId };
