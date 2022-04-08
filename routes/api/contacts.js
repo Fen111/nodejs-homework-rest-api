@@ -1,5 +1,5 @@
 const express = require("express");
-const contactModel = require("../../models/contacts");
+const contactModel = require("../../repository/contacts");
 const {
   schemaCreateContact,
   schemaMongoId,

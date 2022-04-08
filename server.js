@@ -1,5 +1,5 @@
 const app = require("./app");
-const db = require("./models/db");
+const db = require("./config/db");
 
 db.then(() => {
   app.listen(3000, () => {
