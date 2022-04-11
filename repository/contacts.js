@@ -1,4 +1,3 @@
-const res = require("express/lib/response");
 const Contact = require("../models/contact");
 
 const listContacts = async () => {

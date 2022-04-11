@@ -1,5 +1,5 @@
 const express = require("express");
-const contactModel = require("../../repository/contacts");
+const contactRepository = require("../../repository/contacts");
 const {
   schemaCreateContact,
   schemaMongoId,
@@ -11,12 +11,12 @@ const {
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
-  const contacts = await contactModel.listContacts();
+  const contacts = await contactRepository.listContacts();
   res.json({ status: "success", code: 200, payload: { contacts } });
 });
 
 router.get("/:contactId", async (req, res, next) => {
-  const contact = await contactModel.getContactById(req.params.contactId);
+  const contact = await contactRepository.getContactById(req.params.contactId);
   if (contact) {
     return res.json({ status: "success", code: 200, payload: { contact } });
   }
@@ -27,7 +27,7 @@ router.get("/:contactId", async (req, res, next) => {
 
 router.post("/", validateBody(schemaCreateContact), async (req, res, next) => {
   if (req.body) {
-    const contacts = await contactModel.addContact(req.body);
+    const contacts = await contactRepository.addContact(req.body);
     res
       .status(201)
       .json({ status: "success", code: 201, payload: { contacts } });
@@ -43,7 +43,7 @@ router.delete(
   "/:contactId",
   validateParams(schemaMongoId),
   async (req, res, next) => {
-    const contact = await contactModel.removeContact(req.params.contactId);
+    const contact = await contactRepository.removeContact(req.params.contactId);
     if (contact) {
       res.json({
         status: "success",
@@ -63,7 +63,7 @@ router.put(
   validateParams(schemaMongoId),
   async (req, res, next) => {
     if (req.body) {
-      const contact = await contactModel.updateContact(
+      const contact = await contactRepository.updateContact(
         req.params.contactId,
         req.body
       );
@@ -86,7 +86,7 @@ router.patch(
   "/:contactId/phone",
   validateParams(schemaMongoId),
   async (req, res, next) => {
-    const contact = await contactModel.updateContact(
+    const contact = await contactRepository.updateContact(
       req.params.contactId,
       req.body
     );
