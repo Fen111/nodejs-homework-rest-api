@@ -5,7 +5,7 @@ const {
   addContact,
   removeContact,
   updateContact,
-} = require("../../controllers/contacts");
+} = require("../../../controllers/contacts");
 const {
   schemaCreateContact,
   schemaMongoId,
@@ -13,7 +13,7 @@ const {
 const {
   validateBody,
   validateParams,
-} = require("../../middlewares/validation");
+} = require("../../../middlewares/validation");
 const router = express.Router();
 
 router.get("/", listContacts);
