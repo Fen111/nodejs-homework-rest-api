@@ -20,7 +20,7 @@ router.get("/", listContacts);
 
 router.get("/:contactId", getContactById);
 
-router.post("/", addContact);
+router.post("/", validateBody(schemaCreateContact), addContact);
 
 router.delete("/:contactId", validateParams(schemaMongoId), removeContact);
 
