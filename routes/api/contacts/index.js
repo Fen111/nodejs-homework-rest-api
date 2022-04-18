@@ -14,18 +14,30 @@ const {
   validateBody,
   validateParams,
 } = require("../../../middlewares/validation");
+
+const guard = require("../../../middlewares/guard");
 const router = express.Router();
 
-router.get("/", listContacts);
+router.get("/", guard, listContacts);
 
-router.get("/:contactId", getContactById);
+router.get("/:contactId", guard, getContactById);
 
-router.post("/", validateBody(schemaCreateContact), addContact);
+router.post("/", guard, validateBody(schemaCreateContact), addContact);
 
-router.delete("/:contactId", validateParams(schemaMongoId), removeContact);
+router.delete(
+  "/:contactId",
+  guard,
+  validateParams(schemaMongoId),
+  removeContact
+);
 
-router.put("/:contactId", validateParams(schemaMongoId), updateContact);
+router.put("/:contactId", guard, validateParams(schemaMongoId), updateContact);
 
-router.patch("/:contactId/phone", validateParams(schemaMongoId), updateContact);
+router.patch(
+  "/:contactId/phone",
+  guard,
+  validateParams(schemaMongoId),
+  updateContact
+);
 
 module.exports = router;
