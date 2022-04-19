@@ -3,7 +3,6 @@ const { HTTP_STATUS_CODE } = require("../../libs/constants");
 
 const registration = async (req, res) => {
   const user = await authService.create(req.body);
-  console.log(user);
   return res.status(HTTP_STATUS_CODE.CREATED).json({
     status: "success",
     code: HTTP_STATUS_CODE.CREATED,
@@ -12,8 +11,9 @@ const registration = async (req, res) => {
 };
 const login = async (req, res) => {
   const token = await authService.login(req.body);
+  console.log(token);
   return res.status(HTTP_STATUS_CODE.OK).json({
-    status: "succes",
+    status: "success",
     code: HTTP_STATUS_CODE.OK,
     data: { token },
   });

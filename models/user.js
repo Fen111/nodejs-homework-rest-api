@@ -25,13 +25,13 @@ const userSchema = new Schema(
         const re = /\S+@\S+\.\S+/;
         return re.test(String(value).toLowerCase());
       },
-      password: { type: String, required: true },
-      token: { type: String, default: null },
-      role: {
-        type: String,
-        enum: { values: Object.values(Role), message: "Invalid role" },
-        default: Role.USER,
-      },
+    },
+    password: { type: String, required: true },
+    token: { type: String, default: null },
+    role: {
+      type: String,
+      enum: { values: Object.values(Role), message: "Invalid role" },
+      default: Role.USER,
     },
   },
   { versionKey: false, timestamps: true, toObject: { virtuals: true } }

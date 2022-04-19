@@ -16,28 +16,39 @@ const {
 } = require("../../../middlewares/validation");
 
 const guard = require("../../../middlewares/guard");
+const { wrapper: wrapperError } = require("../../../middlewares/error-handler");
 const router = express.Router();
 
 router.get("/", guard, listContacts);
 
-router.get("/:contactId", guard, getContactById);
+router.get("/:contactId", guard, wrapperError(getContactById));
 
-router.post("/", guard, validateBody(schemaCreateContact), addContact);
+router.post(
+  "/",
+  guard,
+  validateBody(schemaCreateContact),
+  wrapperError(addContact)
+);
 
 router.delete(
   "/:contactId",
   guard,
   validateParams(schemaMongoId),
-  removeContact
+  wrapperError(removeContact)
 );
 
-router.put("/:contactId", guard, validateParams(schemaMongoId), updateContact);
+router.put(
+  "/:contactId",
+  guard,
+  validateParams(schemaMongoId),
+  wrapperError(updateContact)
+);
 
 router.patch(
   "/:contactId/phone",
   guard,
   validateParams(schemaMongoId),
-  updateContact
+  wrapperError(updateContact)
 );
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
 const { Schema, model } = mongoose;
 const {
   LIMIT_EMAIL_LENGTH,
@@ -14,6 +15,11 @@ const contactSchema = new Schema(
       max: LIMIT_NAME_LENGTH.max,
       required: [true, "Set name for contact"],
       unique: true,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
     },
     email: {
       type: String,
@@ -34,6 +40,7 @@ const contactSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
+contactSchema.plugin(mongoosePaginate);
 const Contact = model("contact", contactSchema);
 
 module.exports = Contact;
