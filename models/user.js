@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
-const {
-  LIMIT_EMAIL_LENGTH,
-  LIMIT_NAME_LENGTH,
-  Role,
-} = require("../libs/constants");
+const { LIMIT_EMAIL_LENGTH, LIMIT_NAME_LENGTH } = require("../libs/constants");
 const bcrypt = require("bcryptjs");
 
 const userSchema = new Schema(
@@ -19,20 +15,20 @@ const userSchema = new Schema(
       type: String,
       min: LIMIT_EMAIL_LENGTH.min,
       max: LIMIT_EMAIL_LENGTH.max,
-      required: [true, "Set email for user"],
+      required: [true, "Email is required"],
       unique: true,
       validate(value) {
         const re = /\S+@\S+\.\S+/;
         return re.test(String(value).toLowerCase());
       },
     },
-    password: { type: String, required: true },
-    token: { type: String, default: null },
-    role: {
+    subscription: {
       type: String,
-      enum: { values: Object.values(Role), message: "Invalid role" },
-      default: Role.USER,
+      enum: ["starter", "pro", "business"],
+      default: "starter",
     },
+    password: { type: String, required: [true, "Password is required"] },
+    token: { type: String, default: null },
   },
   { versionKey: false, timestamps: true, toObject: { virtuals: true } }
 );

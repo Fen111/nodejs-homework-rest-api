@@ -1,6 +1,5 @@
 const Contacts = require("../../repository/contacts");
-const { HTTP_STATUS_CODE } = require("../../libs/constants");
-const { CustomError } = require("../../middlewares/error-handler");
+const { NotFound } = require("http-errors");
 
 class ContactsService {
   async getAll(query, user) {
@@ -29,7 +28,7 @@ class ContactsService {
   async getById(id, user) {
     const contact = await Contacts.getContactById(id, user);
     if (!contact) {
-      throw new CustomError(HTTP_STATUS_CODE.NOT_FOUND, "Not found");
+      throw new NotFound("Not found");
     }
     return contact;
   }
@@ -42,7 +41,7 @@ class ContactsService {
   async update(id, body, user) {
     const contact = await Contacts.updateContact(id, body, user);
     if (!contact) {
-      throw new CustomError(HTTP_STATUS_CODE.NOT_FOUND, "Not Found");
+      throw new NotFound("Not Found");
     }
     return contact;
   }
@@ -50,7 +49,7 @@ class ContactsService {
   async remove(id, user) {
     const contact = await Contacts.removeContact(id, user);
     if (!contact) {
-      throw new CustomError(HTTP_STATUS_CODE.NOT_FOUND, "Not Found");
+      throw new NotFound("Not Found");
     }
     return contact;
   }

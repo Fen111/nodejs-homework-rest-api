@@ -1,5 +1,10 @@
 const express = require("express");
-const { registration, login, logout } = require("../../../controllers/auth");
+const {
+  registration,
+  login,
+  logout,
+  getCurrent,
+} = require("../../../controllers/auth");
 const { wrapper: wrapperError } = require("../../../middlewares/error-handler");
 const guard = require("../../../middlewares/guard");
 const router = express.Router();
@@ -12,5 +17,6 @@ router.post(
 );
 router.post("login", wrapperError(login));
 router.post("logout", guard, wrapperError(logout));
+router.get("/current", wrapperError(getCurrent));
 
 module.exports = router;
