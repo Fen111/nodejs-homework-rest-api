@@ -30,10 +30,13 @@ const Role = {
   USER: "user",
 };
 
+const FOLDER_CLOUD_AVATAR = "avatars";
+
 module.exports = {
   LIMIT_NAME_LENGTH,
   LIMIT_EMAIL_LENGTH,
   LIMIT_PHONE_LENGTH,
   HTTP_STATUS_CODE,
   Role,
+  FOLDER_CLOUD_AVATAR,
 };

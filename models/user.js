@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
+const gravatar = require("gravatar");
 const { LIMIT_EMAIL_LENGTH, LIMIT_NAME_LENGTH } = require("../libs/constants");
 const bcrypt = require("bcryptjs");
 
@@ -29,6 +30,13 @@ const userSchema = new Schema(
     },
     password: { type: String, required: [true, "Password is required"] },
     token: { type: String, default: null },
+    avatar: {
+      type: String,
+      default: function () {
+        return gravatar.url(this.email, { s: "250" }, true);
+      },
+    },
+    cloudId: { type: String, default: null },
   },
   { versionKey: false, timestamps: true, toObject: { virtuals: true } }
 );

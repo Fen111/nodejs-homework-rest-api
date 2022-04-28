@@ -15,8 +15,8 @@ router.post(
   limiter(15 * 60 * 1000 * 2),
   wrapperError(registration)
 );
-router.post("login", wrapperError(login));
-router.post("logout", guard, wrapperError(logout));
+router.post("/login", wrapperError(login));
+router.post("/logout", guard, wrapperError(logout));
 router.get("/current", wrapperError(getCurrent));
 
 module.exports = router;
