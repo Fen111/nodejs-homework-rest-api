@@ -3,6 +3,8 @@ const {
   registration,
   login,
   logout,
+  verifyUser,
+  reverifyEmail,
   getCurrent,
 } = require("../../../controllers/auth");
 const { wrapper: wrapperError } = require("../../../middlewares/error-handler");
@@ -16,7 +18,10 @@ router.post(
   wrapperError(registration)
 );
 router.post("/login", wrapperError(login));
+router.get("/verify-email/:token", wrapperError(verifyUser));
+router.post("/verify-email", wrapperError(reverifyEmail));
 router.post("/logout", guard, wrapperError(logout));
+
 router.get("/current", wrapperError(getCurrent));
 
 module.exports = router;

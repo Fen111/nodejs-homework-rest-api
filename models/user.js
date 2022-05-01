@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 const gravatar = require("gravatar");
+const { randomUUID } = require("crypto");
 const { LIMIT_EMAIL_LENGTH, LIMIT_NAME_LENGTH } = require("../libs/constants");
 const bcrypt = require("bcryptjs");
 
@@ -37,6 +38,8 @@ const userSchema = new Schema(
       },
     },
     cloudId: { type: String, default: null },
+    isVerify: { type: Boolean, default: false },
+    verifyEmailToken: { type: String, default: randomUUID() },
   },
   { versionKey: false, timestamps: true, toObject: { virtuals: true } }
 );

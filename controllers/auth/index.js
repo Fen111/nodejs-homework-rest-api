@@ -37,4 +37,35 @@ const getCurrent = async (req, res) => {
   });
 };
 
-module.exports = { registration, login, logout, getCurrent };
+const verifyUser = async (req, res) => {
+  const token = req.params.token;
+  const user = await authService.verifyUser(token);
+  return res.status(HTTP_STATUS_CODE.OK).json({
+    status: "success",
+    code: HTTP_STATUS_CODE.OK,
+    data: {
+      message: `User verified. Welcome ${user.name}`,
+    },
+  });
+};
+
+const reverifyEmail = async (req, res) => {
+  const { email } = req.body;
+  await authService.reverifyEmail(email);
+  return res.status(HTTP_STATUS_CODE.OK).json({
+    status: "success",
+    code: HTTP_STATUS_CODE.OK,
+    data: {
+      message: "Success",
+    },
+  });
+};
+
+module.exports = {
+  registration,
+  login,
+  logout,
+  getCurrent,
+  verifyUser,
+  reverifyEmail,
+};
